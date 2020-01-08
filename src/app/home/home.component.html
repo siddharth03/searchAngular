@@ -1,0 +1,58 @@
+<div class="container"
+   fxLayoutGap="10px">
+
+  <div fxFlex>
+        <div>
+            <h3>Dropdown With Search</h3>
+        </div>
+    </div>
+    
+    <div fxFlex fxFlexOffset="20px" class="column" >
+        <form [formGroup]="searchUserForm" (ngSubmit)="onSubmit()" autocomplete="off" >
+
+
+            <p>
+                <mat-form-field >
+                    <mat-label>Default</mat-label>
+                    <mat-select formControlName="default">
+                        <mat-option *ngFor="let component of components"  [value]="component.title">
+                            {{component.title}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </p>
+
+              <p>
+                <mat-form-field *ngIf="searchable == true">
+                    <input matInput name="search" placeholder="Search" type="text" (input)="search($event.target.value)">
+                </mat-form-field>
+              </p>
+
+              <p>
+                <mat-form-field *ngIf="multiselect == true">
+                    <mat-select placeholder="Dropdown" formControlName="dropdown" multiple>
+                        <mat-option *ngFor="let filters of componentsCopy" [value]="filters.title" (click)="tosslePerOne(allSelected.viewValue)">
+                            {{filters.title}}
+                        </mat-option>
+                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">All</mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </p>
+
+              <div class="btn-holder">
+                <button type="button" (click)="clearForm()">Clear me!</button>
+                <button type="submit" mat-button class="background-primary text-floral-white" style='margin-left:30px'>Submit</button>
+              </div>
+        </form>
+    </div>
+
+    <div *ngIf="displayOutput == true ">
+        <h3>Result</h3>
+        
+          <p>{{submittedData.default}}: {{submittedData.dropdown}}</p>
+    </div>
+    
+
+
+</div>
+
